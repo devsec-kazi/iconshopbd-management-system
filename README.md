@@ -1,20 +1,39 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# ICON Management System
 
-# Run and deploy your AI Studio app
+A complete management system designed to manage business operations efficiently with a modern interface, organized workflow, and scalable architecture.
 
-This contains everything you need to run your app locally.
+## 🚀 Features
 
-View your app in AI Studio: https://ai.studio/apps/dad85883-5cc0-4efd-a211-c2e52dc469f0
+- 📊 Dashboard Management
+- 🧾 Invoice & Memo Management
+- 📦 Order Management
+- 👥 Customer Management
+- 💳 Payment Tracking
+- 📅 Order Date & Delivery Date Management
+- 🏭 Factory Management Support
+- 🔍 Search & Filter System
+- 📱 Responsive Design
+- 🔐 Secure Authentication System
 
-## Run Locally
+## 🛠️ Technologies Used
 
-**Prerequisites:**  Node.js
+### Frontend
+- React.js
+- JavaScript
+- HTML5
+- CSS3
+- Tailwind CSS / Bootstrap
 
+### Backend
+- Node.js
+- Express.js
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+### Database
+- MongoDB
+
+### Tools
+- VS Code
+- Git & GitHub
+- npm
+
+## 📂 Project Structure
