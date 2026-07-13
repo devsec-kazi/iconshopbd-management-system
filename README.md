@@ -36,4 +36,8 @@ A complete management system designed to manage business operations efficiently 
 - Git & GitHub
 - npm
 
-## 📂 Project Structure
+## 👨‍💻 Developer
+
+**Developed by Kazi Ashrafuzzaman**
+
+Full Stack Developer | Cybersecurity Enthusiast
