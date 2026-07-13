@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --font-heading: 'Outfit', 'Inter', sans-serif;
+    --font-sans: 'Inter', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    --color-background: var(--background);
+    --color-foreground: var(--foreground);
+    --color-card: var(--card);
+    --color-card-foreground: var(--card-foreground);
+    --color-popover: var(--popover);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-primary: var(--primary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-secondary: var(--secondary);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-muted: var(--muted);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-accent: var(--accent);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-destructive: var(--destructive);
+    --color-success: var(--success);
+    --color-border: var(--border);
+    --color-input: var(--input);
+    --color-ring: var(--ring);
+    --radius-lg: var(--radius);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-sm: calc(var(--radius) * 0.6);
+}
+
+:root {
+    /* Premium Indigo & Sunset Gold Branding - Unique Palette */
+    --background: oklch(0.98 0.005 285); /* Clean, slightly warm violet-white background */
+    --foreground: oklch(0.12 0.04 285);   /* Deep majestic charcoal for extreme accessibility */
+    
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.12 0.04 285);
+    
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.12 0.04 285);
+    
+    --primary: oklch(0.44 0.20 285);     /* Luxurious Deep Royal Indigo */
+    --primary-foreground: oklch(1 0 0);
+    
+    --secondary: oklch(0.94 0.02 285);   /* Beautiful Lavender tint */
+    --secondary-foreground: oklch(0.24 0.12 285);
+    
+    --muted: oklch(0.96 0.01 285);
+    --muted-foreground: oklch(0.40 0.03 285);
+    
+    --accent: oklch(0.70 0.15 70);       /* Premium Warm Sand Gold */
+    --accent-foreground: oklch(0.12 0.04 285);
+    
+    --destructive: oklch(0.55 0.22 25);  /* Clean energetic Rose/Crimson */
+    --success: oklch(0.60 0.16 160);     /* Breathtaking Mint Teal */
+    
+    --border: oklch(0.92 0.015 285);     /* Elegant light borders */
+    --input: oklch(0.92 0.015 285);
+    --ring: oklch(0.44 0.20 285);
+    
+    /* bKash Branding - Exact #E2136E from image */
+    --bkash: oklch(0.55 0.24 350);
+    
+    --radius: 1.25rem; /* Clean rounded elements */
+}
+
+.dark {
+    --background: oklch(0 0 0);
+    --foreground: oklch(1 0 0);
+    --card: oklch(0.1 0 0);
+    --card-foreground: oklch(1 0 0);
+    --primary: oklch(1 0 0);
+    --primary-foreground: oklch(0 0 0);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  html {
+    @apply font-sans;
+  }
+}
