@@ -1,0 +1,95 @@
+{
+  "entities": {
+    "Customer": {
+      "title": "Customer",
+      "description": "Customer information for Roana Gown & Glory",
+      "type": "object",
+      "properties": {
+        "customerId": { "type": "string", "description": "Unique searchable ID" },
+        "name": { "type": "string" },
+        "address": { "type": "string" },
+        "mobile": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "notes": { "type": "string" }
+      },
+      "required": ["customerId", "name", "mobile"]
+    },
+    "Invoice": {
+      "title": "Invoice",
+      "description": "Sales invoice records",
+      "type": "object",
+      "properties": {
+        "invoiceNo": { "type": "string" },
+        "customerId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "product": { "type": "string" },
+              "category": { "type": "string" },
+              "quantity": { "type": "number" },
+              "costPerProduct": { "type": "number" },
+              "total": { "type": "number" }
+            }
+          }
+        },
+        "totalAmount": { "type": "number" },
+        "paymentMethod": { "type": "string" },
+        "advancePercentage": { "type": "number" },
+        "advanceAmount": { "type": "number" },
+        "dueAmount": { "type": "number" },
+        "paymentStatus": { "type": "string", "enum": ["Paid", "Due"] }
+      },
+      "required": ["invoiceNo", "customerId", "date", "items", "totalAmount"]
+    },
+    "Reminder": {
+      "title": "Reminder",
+      "description": "Customer follow-up reminders",
+      "type": "object",
+      "properties": {
+        "customerId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "reminderTime": { "type": "string", "format": "date-time" },
+        "message": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "completed"] }
+      },
+      "required": ["customerId", "reminderTime", "status"]
+    },
+    "User": {
+      "title": "User",
+      "description": "System users and roles",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "username": { "type": "string" },
+        "password": { "type": "string" },
+        "role": { "type": "string", "enum": ["Admin", "Accountant", "IT"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "username", "password", "role"]
+    }
+  },
+  "firestore": {
+    "/customers/{customerId}": {
+      "schema": "Customer",
+      "description": "Collection of customers"
+    },
+    "/invoices/{invoiceId}": {
+      "schema": "Invoice",
+      "description": "Collection of invoices"
+    },
+    "/reminders/{reminderId}": {
+      "schema": "Reminder",
+      "description": "Collection of reminders"
+    },
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Collection of system users"
+    }
+  }
+}

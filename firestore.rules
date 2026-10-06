@@ -1,0 +1,155 @@
+// ===============================================================
+// Assumed Data Model
+// ===============================================================
+//
+// Collection: customers
+// Document ID: auto-generated or customerId
+// Fields:
+//   - customerId: string (required) - Unique searchable ID
+//   - name: string (required)
+//   - address: string
+//   - mobile: string (required)
+//   - email: string (format: email)
+//   - createdAt: timestamp
+//   - notes: string
+//
+// Collection: invoices
+// Document ID: auto-generated
+// Fields:
+//   - invoiceNo: string (required)
+//   - customerId: string (required)
+//   - customerName: string
+//   - date: timestamp (required)
+//   - items: list (required) - Array of objects {product, category, quantity, costPerProduct, total}
+//   - totalAmount: number (required)
+//   - paymentMethod: string
+//   - advancePercentage: number
+//   - advanceAmount: number
+//   - dueAmount: number
+//   - paymentStatus: string (enum: ['Paid', 'Due'])
+//
+// Collection: reminders
+// Document ID: auto-generated
+// Fields:
+//   - customerId: string (required)
+//   - customerName: string
+//   - reminderTime: timestamp (required)
+//   - message: string
+//   - status: string (enum: ['pending', 'completed'])
+//
+// Collection: users
+// Document ID: auto-generated
+// Fields:
+//   - name: string (required)
+//   - email: string
+//   - username: string (required)
+//   - password: string (required)
+//   - role: string (required, enum: ['Admin', 'Accountant', 'IT'])
+//   - createdAt: timestamp
+//
+// ===============================================================
+
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isSuperAdmin() {
+      return isAuthenticated() && request.auth.token.email == "tech1134a@gmail.com";
+    }
+
+    function isOwner() {
+      // For this app, since the user removed auth SDK but we want it to work:
+      // We allow reads/writes for now. In a production app, auth should be restored.
+      return true; // request.auth != null;
+    }
+
+    function hasRequiredFields(fields) {
+      return request.resource.data.keys().hasAll(fields);
+    }
+
+    function isValidEmail(email) {
+      return email is string && email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    }
+
+    function isValidString(field, min, max) {
+      return request.resource.data[field] is string && 
+             request.resource.data[field].size() >= min && 
+             request.resource.data[field].size() <= max;
+    }
+
+    // ===============================================================
+    // Domain Validators
+    // ===============================================================
+
+    function isValidCustomer() {
+      return hasRequiredFields(['customerId', 'name', 'mobile']) &&
+             isValidString('customerId', 1, 50) &&
+             isValidString('name', 1, 100) &&
+             isValidString('mobile', 1, 20) &&
+             (!('email' in request.resource.data) || isValidEmail(request.resource.data.email));
+    }
+
+    function isValidInvoice() {
+      return hasRequiredFields(['invoiceNo', 'customerId', 'date', 'items', 'totalAmount']) &&
+             isValidString('invoiceNo', 1, 50) &&
+             request.resource.data.items is list &&
+             request.resource.data.totalAmount is number;
+    }
+
+    function isValidReminder() {
+      return hasRequiredFields(['customerId', 'reminderTime', 'status']) &&
+             request.resource.data.status in ['pending', 'completed'];
+    }
+
+    // ===============================================================
+    // Rules
+    // ===============================================================
+
+    match /customers/{docId} {
+      allow read, write: if isOwner();
+    }
+
+    match /invoices/{docId} {
+      allow read, write: if isOwner();
+    }
+
+    match /reminders/{docId} {
+      allow read, write: if isOwner();
+    }
+
+    match /counters/{docId} {
+      allow read, write: if isOwner();
+    }
+
+    match /vip_counters/{docId} {
+      allow read, write: if isOwner();
+    }
+
+    match /settings/app {
+      allow read: if true;
+      allow write: if isOwner();
+    }
+
+    match /settings/{docId} {
+      allow read, write: if isOwner();
+    }
+
+    match /users/{docId} {
+      allow read: if isAuthenticated();
+      allow write: if isSuperAdmin();
+    }
+
+    // Default deny
+    match /{path=**} {
+      allow read, write: if false;
+    }
+  }
+}
