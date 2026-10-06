@@ -70,7 +70,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { cn } from '../lib/utils';
 
 // Extend jsPDF with autotable
-declare module 'jspdf' {
+declare module 'jsPDF' {
   interface jsPDF {
     autoTable: (options: any) => jsPDF;
   }
@@ -116,26 +116,16 @@ interface Invoice {
 }
 
 const PRODUCT_CATEGORIES = [
-  'Gown',
-  'Hood',
-  'Cap',
-  'Sash',
-  'Jute Bag',
-  'Cap-Stole',
-  'Gown-Cap',
-  'Gown-Hood-Cap',
-  'Gown-Cap-Stole',
-  'Gown-Hood-Cap-Stole',
-  'Crest',
-  'Others'
+  "Gown",
+  "Hood",
+  "Cap",
+  "Sash",
+  "Jute Bag",
+  "Cap-Stole",
+  "Gown-Cap",
+  "Gown-Hood-Cap",
+  "Gown-Cap-Stole",
+  "Gown-Hood-Cap-Stole",
+  "Crest",
+  "Others"
 ];
-
-export function InvoiceGenerator({ 
-  initialView = 'create',
-  preSelectedCustomer = null,
-  onClearPreSelected
-}: { 
-  initialView?: 'create' | 'history',
-  preSelectedCustomer?: Customer | null,
-  onClearPreSelected?: () => void
-}) {
